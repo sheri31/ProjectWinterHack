@@ -134,7 +134,20 @@ void __fastcall GameManager_UpdateHook(GameManager* gameManager)
 				{
 					if (std::time(nullptr) - lastLoop >= 5)
 					{
-						if (!playerHandler->isConvertedTraitor)
+                        Il2CppString* roleStr = playerHandler->playerRoleHandler->playerRoleData->GetPlayerRoleString();
+                        Il2CppString* updatedName = Il2CppString::Concat(player->nameField, roleStr);
+                        playerHandler->playerHoverUIHandler->nameField->SetText(updatedName);
+
+                        if (!playerHandler->playerRoleHandler->playerRoleData->isTraitorRole)
+                        {
+                            playerHandler->playerHoverUIHandler->nameField->SetFaceColor(survivorColor);
+                        }
+                        else
+                        {
+                            playerHandler->playerHoverUIHandler->nameField->SetFaceColor(traitorColor);
+                        }
+                        
+                        /*if (!playerHandler->isConvertedTraitor)
 						{
 							Il2CppString* roleStr = playerHandler->playerRoleHandler->playerRoleData->GetPlayerRoleString();
 							Il2CppString* updatedName = Il2CppString::Concat(player->nameField, roleStr);
@@ -154,7 +167,7 @@ void __fastcall GameManager_UpdateHook(GameManager* gameManager)
 							Il2CppString* updatedName = Il2CppString::Concat(player->nameField, Il2CppString::New(" [Converted]"));
 							playerHandler->playerHoverUIHandler->nameField->SetText(updatedName);
 							playerHandler->playerHoverUIHandler->nameField->SetFaceColor(traitorColor);
-						}
+						}*/
 						playerHandler->playerHoverUIHandler->nameField->SetAllDirty();
 						refreshedNameplates = true;
 					}
@@ -237,16 +250,19 @@ void __fastcall UnlocksEntryUI_InitHook(__int64 a1, __int64 a2, int a3, unsigned
 
 void HijackGameLoop()
 {
+    //DebugBreak();
 #if _DEBUG
 	Utilities::AttachDebugConsole();
 #endif
 	Offsets::Initialize();
 
 	auto gameManagerUpdatePtr = Utilities::FindFunction<GameManager::GameManager__Update>(Offsets::Methods::GameManager_Update);
-	gameManagerUpdateOrig = (GameManager::GameManager__Update)Utilities::Hook::DetourFunc64((BYTE*)gameManagerUpdatePtr, (BYTE*)GameManager_UpdateHook, 17);
+    printf("gameManagerUpdatePtr %p\r\n", gameManagerUpdatePtr);
+    gameManagerUpdateOrig = (GameManager::GameManager__Update)Utilities::Hook::DetourFunc64((BYTE*)gameManagerUpdatePtr, (BYTE*)GameManager_UpdateHook, 17);
 
 	auto unlocksEntryUIInitPtr = Utilities::FindFunction<UnlocksEntryUI__Init>(Offsets::Methods::UnlocksEntryUI_Init);
-	unlocksEntryUIInitOrig = (UnlocksEntryUI__Init)Utilities::Hook::DetourFunc64((BYTE*)unlocksEntryUIInitPtr, (BYTE*)UnlocksEntryUI_InitHook, 19);
+    printf("unlocksEntryUIInitPtr %p\r\n", unlocksEntryUIInitPtr);
+    unlocksEntryUIInitOrig = (UnlocksEntryUI__Init)Utilities::Hook::DetourFunc64((BYTE*)unlocksEntryUIInitPtr, (BYTE*)UnlocksEntryUI_InitHook, 19);
 
 	photonNetwork = PhotonNetwork::Instance();
 }

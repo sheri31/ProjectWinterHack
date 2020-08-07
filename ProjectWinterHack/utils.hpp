@@ -17,7 +17,7 @@ namespace Utilities
         {
             if (address < moduleBase)
                 address += moduleBase;
-
+            
             return *(int32_t*)address + (address + 4) - moduleBase;
         }
 
@@ -43,7 +43,10 @@ namespace Utilities
                     if (!pat[2])
                     {
                         if (pattern[0] == 'E' && (pattern[1] == '8' || pattern[1] == '9'))
+                        {
+                            printf("ttern[0] == 'E' && (pattern[1] == '8' || pa  %p\n", firstMatch);
                             return CalcRelativeOffset(firstMatch + 1);
+                        }
                         return firstMatch - moduleBase;
                     }
 

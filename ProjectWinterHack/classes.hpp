@@ -203,8 +203,8 @@ struct PlayerHoverUIHandler
 
 struct TextChatBox
 {
-    char pad_0[0xE0];
-    Il2CppString* localPlayerName; // 0xE0
+    char pad_0[0xF0];
+    Il2CppString* localPlayerName; // 0xF0
 
     typedef void __fastcall TextChat__DisplayLocalMessage(TextChatBox* textChat, Il2CppString* message);
 
@@ -246,10 +246,10 @@ struct CraftingUI
 
 struct HudManager
 {
-    char pad_0[0x88];
-    TextChatBox* textChatBox; // 0x88;
+    char pad_0[0x98];
+    TextChatBox* textChatBox; // 0x98;
     char pad_1[0x10];
-    CraftingUI* craftingUI; // 0xA0
+    CraftingUI* craftingUI; // 0xB0
 };
 
 struct PlayerRoleData
@@ -310,10 +310,10 @@ struct PlayerHandler
     BaseStatScript* hungerScript; // 0xE8
     char pad_2[0x8];
     HudManager* hudManager; // 0xF8
-    char pad_3[0xB0];
-    PlayerRoleHandler* playerRoleHandler; // 0x1B0
+    char pad_3[0xB8];
+    PlayerRoleHandler* playerRoleHandler; // 0x1B8
     char pad_4[0x171];
-    bool isConvertedTraitor; // 0x329
+    //bool isConvertedTraitor; // 0x329
 
     typedef void __fastcall PlayerHandler__SwapPlayerRole(PlayerHandler* playerHandler, ePlayerRole playerRole, bool arg2, int arg3);
 
