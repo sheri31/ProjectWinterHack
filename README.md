@@ -1,3 +1,5 @@
+Update the offsets through il2cppdumper. Because of Confusion, Fixing offsets becomes more difficult. But the game has no anti-debugger measures, debugging and injecting is very easy.
+
 # Project Winter Multi-Hack
 ![Imgur](https://i.imgur.com/ro1PB66.jpg)
 
